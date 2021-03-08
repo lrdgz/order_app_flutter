@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:async/async.dart';
 import 'package:auth/src/domain/token.dart';
 import 'package:auth/src/infra/api/mapper.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:auth/src/domain/credential.dart';
 import 'package:auth/src/infra/api/auth_api_contract.dart';
@@ -16,7 +17,6 @@ class AuthApi implements IAuthApi{
   @override
   Future<Result<String>> signIn(Credential credential) async {
     var endpoint = baseUrl + '/auth/signin';
-    _client.post(endpoint, body: Mapper.toJson(credential));
     return await _postCredential(endpoint, credential);
   }
 
@@ -35,7 +35,7 @@ class AuthApi implements IAuthApi{
 
   @override
   Future<Result<bool>> signOut(Token token) async {
-    var url = baseUrl + 'auth/signout';
+    var url = baseUrl + '/auth/signout';
     var headers = {
       "Content-type": "application/json",
       "Authorization": token.value
